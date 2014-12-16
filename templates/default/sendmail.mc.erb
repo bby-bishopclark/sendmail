@@ -1,0 +1,67 @@
+divert(-1)dnl
+dnl #
+dnl # This sendmail macro config has been automatically built by Chef
+dnl # as part of the mademedia_sendmail cookbook, any changes you make
+dnl # will be overwritten upon the next Chef run, please make changes
+dnl # to your recipes instead of directly to this file.
+dnl #
+include(`/usr/share/sendmail-cf/m4/cf.m4')dnl
+VERSIONID(`setup for linux')dnl
+OSTYPE(`linux')dnl
+dnl #
+dnl # SMTP Relay settings here (if present)
+dnl #
+<%= @relay -%>
+dnl #
+dnl # Trusted authentication mechanisms
+dnl #
+TRUST_AUTH_MECH(`<%= @mechanisms %>')dnl
+define(`confAUTH_MECHANISMS', `<%= @mechanisms %>')dnl
+dnl #
+dnl # Network configuration
+dnl #
+DAEMON_OPTIONS(`Port=smtp,Addr=<%= @listen_address -%>, Name=MTA')dnl
+DAEMON_OPTIONS(`Port=submission,Addr=<%= @listen_address -%>, Name=MSA, M=Ea')dnl
+LOCAL_DOMAIN(`<%= @local_domain -%>')dnl
+dnl #
+dnl # Stock configuration options
+dnl #
+FEATURE(`access_db')dnl
+define(`confDEF_USER_ID', ``8:12'')dnl
+define(`confTO_CONNECT', `1m')dnl
+define(`confTRY_NULL_MX_LIST', `True')dnl
+define(`confDONT_PROBE_INTERFACES', `True')dnl
+define(`PROCMAIL_MAILER_PATH', `/usr/bin/procmail')dnl
+define(`ALIAS_FILE', `/etc/aliases')dnl
+define(`STATUS_FILE', `/var/log/mail/statistics')dnl
+define(`UUCP_MAILER_MAX', `2000000')dnl
+define(`confUSERDB_SPEC', `<%= @config_dir -%>/userdb.db')dnl
+define(`confPRIVACY_FLAGS', `authwarnings,novrfy,noexpn,restrictqrun')dnl
+define(`confAUTH_OPTIONS', `A')dnl
+define(`confTO_IDENT', `0')dnl
+FEATURE(`no_default_msa', `dnl')dnl
+FEATURE(`smrsh', `/usr/sbin/smrsh')dnl
+FEATURE(`mailertable', `hash -o <%= @config_dir -%>/mailertable.db')dnl
+FEATURE(`virtusertable', `hash -o <%= @config_dir -%>/virtusertable.db')dnl
+FEATURE(redirect)dnl
+FEATURE(always_add_domain)dnl
+FEATURE(use_cw_file)dnl
+FEATURE(use_ct_file)dnl
+FEATURE(local_procmail, `', `procmail -t -Y -a $h -d $u')dnl
+FEATURE(`access_db', `hash -T<TMPF> -o <%= @config_dir -%>/access.db')dnl
+FEATURE(`blacklist_recipients')dnl
+EXPOSED_USER(`root')dnl
+FEATURE(`accept_unresolvable_domains')dnl
+dnl #
+dnl # Masquerade settings here (if present)
+dnl #
+<%= @masquerade -%>
+dnl #
+dnl # Additional user configuration here (if present)
+dnl #
+<%= @additional -%>
+dnl #
+dnl # Enable service
+dnl #
+MAILER(smtp)dnl
+MAILER(procmail)dnl

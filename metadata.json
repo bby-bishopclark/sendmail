@@ -1,0 +1,39 @@
+{
+  "name": "mademedia_sendmail",
+  "version": "0.0.1",
+  "description": "Installs/Configures sendmail",
+  "long_description": "Installs/Configures sendmail",
+  "maintainer": "Made Media Ltd",
+  "maintainer_email": "Jason Gaunt <jason.gaunt@mademedia.co.uk>",
+  "license": "MIT",
+  "platforms": {
+    "amazon": ">= 0.0.0",
+    "redhat": ">= 0.0.0",
+    "centos": ">= 0.0.0",
+    "scientific": ">= 0.0.0",
+    "fedora": ">= 0.0.0",
+    "debian": ">= 0.0.0",
+    "ubuntu": ">= 0.0.0"
+  },
+  "dependencies": {
+    "apt": ">= 0.0.0",
+    "yum": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+    "mademedia_sendmail": "Install and configure Sendmail"
+  }
+}
