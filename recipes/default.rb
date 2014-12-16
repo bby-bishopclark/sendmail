@@ -71,7 +71,7 @@ node['mademedia_sendmail']['authinfo'].each do |host,parameters|
 end
 ## Masquerade settings
 masquerade = '';
-unless node['mademedia_sendmail']['masquerade'].nil?
+unless node['mademedia_sendmail']['masquerade'].empty?
 	masquerade += "FEATURE(always_add_domain)dnl\n"
 	masquerade += "FEATURE(\`masquerade_entire_domain')dnl\n"
 	masquerade += "FEATURE(\`masquerade_envelope')dnl\n"
@@ -85,7 +85,7 @@ unless node['mademedia_sendmail']['masquerade'].nil?
 end
 ## Additional user configuration
 additional = '';
-unless node['mademedia_sendmail']['additional'].nil?
+unless node['mademedia_sendmail']['additional'].empty?
 	node['mademedia_sendmail']['additional'].each do |additional_line|
 		additional += "#{additional_line}dnl\n"
 	end
