@@ -50,8 +50,8 @@ node['mademedia_sendmail']['authinfo'].each do |host,parameters|
 	case parameters['mechanisms'].upcase
 	when "LOGIN"
 		# Base 64 encode the username and password
-		authinfo += " \"U=" + Base64.encode64(parameters['username']).gsub(/\n/, '') unless parameters['username'].nil?
-		authinfo += " \"P=" + Base64.encode64(parameters['password']).gsub(/\n/, '') unless parameters['password'].nil?
+		authinfo += " \"U=" + Base64.encode64(parameters['username']).gsub(/\n/, '') + "\"" unless parameters['username'].nil?
+		authinfo += " \"P=" + Base64.encode64(parameters['password']).gsub(/\n/, '') + "\"" unless parameters['password'].nil?
 		authinfo += " \"M:#{parameters['mechanisms']}\""
 		authinfo += " \"I:#{parameters['authentication']}\"" unless parameters['authentication'].nil?
 		authinfo += " \"R:#{parameters['realm']}\"" unless parameters['realm'].nil?
@@ -65,9 +65,9 @@ node['mademedia_sendmail']['authinfo'].each do |host,parameters|
 	end
 	next if parameters['relay'] != true # Skip this next part if this is not a relay
 	port = parameters['port'].nil? ? node['mademedia_sendmail']['relay_port'] : parameters['port']
-	relay += "define (\`SMART_HOST', \`#{host}')dnl\n"
-	relay += "define (\`RELAY_MAILER_ARGS', \`TCP $h #{port}')dnl\n"
-	relay += "define (\`ESMTP_MAILER_ARGS', \`TCP $h #{port}')dnl\n"
+	relay += "define(\`SMART_HOST', \`#{host}')dnl\n"
+	relay += "define(\`RELAY_MAILER_ARGS', \`TCP $h #{port}')dnl\n"
+	relay += "define(\`ESMTP_MAILER_ARGS', \`TCP $h #{port}')dnl\n"
 end
 ## Masquerade settings
 masquerade = '';
@@ -80,8 +80,8 @@ unless node['mademedia_sendmail']['masquerade'].nil?
 		masquerade += "MASQUERADE_AS(\`" + domain + "')dnl\n"
 		masquerade += "MASQUERADE_DOMAIN(\`" + domain + "')dnl\n"
 	end
-	masquerade += "MASQUERADE_DOMAIN(localhost)dnl"
-	masquerade += "MASQUERADE_DOMAIN(localhost.localhost)dnl"
+	masquerade += "MASQUERADE_DOMAIN(localhost)dnl\n"
+	masquerade += "MASQUERADE_DOMAIN(localhost.localhost)dnl\n"
 end
 ## Additional user configuration
 additional = '';
