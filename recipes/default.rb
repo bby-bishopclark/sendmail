@@ -12,9 +12,15 @@
 require 'base64'
 
 # Set core_platform based on our platform
-core_platform = case platform
-when "debian","ubuntu" then "debian"
-else "rhel"
+if !node['platform_family'].nil?
+	core_platform = node['platform_family']
+elsif !node['platform'].nil?
+	core_platform = case node['platform']
+	when "debian","ubuntu" then "debian"
+	else "rhel"
+	end
+else
+	core_platform = "rhel"
 end
 
 # Make sure we've got sendmail and required tools installed
